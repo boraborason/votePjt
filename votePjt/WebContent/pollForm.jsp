@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import = "java.util.Vector,poll.*" %>
+<%@ page import = "java.util.*,poll.*" %>
 <jsp:useBean id="DBcon" class="poll.DBConnecter"/>
 <!DOCTYPE html>
 <html>
@@ -14,7 +14,8 @@
 	
 	if(!(request.getParameter("num")==null || request.getParameter("num").equals(""))){ //num값이 null이거나 공백이 아닐때 
 		num = Integer.parseInt(request.getParameter("num")); //num값을 int로 형변환
- 	}
+		
+	}
 	
 	ListBean listBean = DBcon.getList(num); 
 	Vector<String> list = DBcon.getItem(num);	//선택한 투표 설문 데이터를 받음
@@ -32,14 +33,15 @@
 				<td colspan="2"> Q : <%=question%></td>
 			</tr>
 			<tr>
-				<td colsapn="2">
+				<td colspan="2">
 					<%
 					 for(int i = 0; i < list.size(); i++){
+						 
 						 String itemList = list.get(i);
 						 if(type==1){
-							 out.println("<input type=check name='itemnum' value='"+i+"'>");
+							 out.println("<input type='checkbox' name='itemnum' value='"+i+"'>");
 						 }else{	 
-							 out.println("<input type=radio name='itemnum' value='"+i+"'>");
+							 out.println("<input type='radio' name='itemnum' value='"+i+"'>");
 						 }
 						 out.println(itemList + "<br>");
 					 }
@@ -49,7 +51,7 @@
 			<tr>
 				<td>
 					<%
-						if(active==1){
+						if(active==1){ //투표할 리스트가 있으면
 							out.println("<input type='submit' value='투표'>");
 						}else{
 							out.println("투표");

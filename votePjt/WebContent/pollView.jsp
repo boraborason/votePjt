@@ -10,6 +10,7 @@
 	}
 	int sum = DBcon.sumCount(num);
 	Vector<ItemBean> list = DBcon.getView(num);
+	System.out.println(list);
 	ListBean listbean = DBcon.getList(num);
 	String question = listbean.getQuestion();
 	Random r = new Random();

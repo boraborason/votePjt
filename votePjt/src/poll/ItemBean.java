@@ -2,10 +2,10 @@ package poll;
 
 public class ItemBean { 
 	
-	private int listnum; 
-	private int itemnum;
-	private String[] item;
-	private int count; 
+	private int listnum; //투표 된 설문번호
+	private int itemnum; //아에템 번호 (1,2,3,4)
+	private String[] item; //아이템 내용 (4가지)
+	private int count;  //투표수
 
 	public int getListnum() {
 		return listnum;

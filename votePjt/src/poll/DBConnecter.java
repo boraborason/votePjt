@@ -29,6 +29,7 @@ public class DBConnecter {
 			sql = "select max(num) from tblpollList"; //설문 리스트에서 가장 큰 num값을 가져옴
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
+			
 			if(rs.next()) {
 				maxNum = rs.getInt(1);  //가장 높은 num값 
 			}
@@ -148,6 +149,7 @@ public class DBConnecter {
 		} finally {
 			pool.freeConnection(con, pstmt, rs);
 		}
+		
 		return listbean;
 	}
 	
@@ -158,21 +160,23 @@ public class DBConnecter {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = null;
-		
 		Vector<String> list = new Vector<String>();
 		
 		try {
 			con = pool.getConnection();
-			if(num == 0) {
+			if(num == 0) 
 				num = getMaxNum();
-			}
+			
 			sql = "select item from tblPollItem where listnum = ?";
+			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, num);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				list.add(rs.getString(1));
 			}
 		} catch (Exception e) {
+		}finally{
+			pool.freeConnection(con, pstmt,rs);
 		}
 		return list;
 	}
@@ -186,21 +190,21 @@ public class DBConnecter {
 		
 		try {
 			con = pool.getConnection();
-			sql = "update tblPollItem set cout = count + 1 where listnum = ? and item = ?";
+			sql = "update tblPollItem set count = ifnull(count, 0) + 1 where listnum = ? and item = ?;";//실행안됨 ㅠㅠ
 			pstmt = con.prepareStatement(sql);
 			if(num == 0) 
 				num = getMaxNum();
 			for(int i = 0; i < itemnum.length; i++) {
-				if(itemnum[i] == null || itemnum[i].equals("")) {
+				if(itemnum[i] == null || itemnum[i].equals("")) 
 					break;	
-				}
+				
 				pstmt.setInt(1, num);
 				pstmt.setInt(2, Integer.parseInt(itemnum[i]));
-				int j = pstmt.executeUpdate();
-				if(j > 0) {
+				int j = pstmt.executeUpdate(); //성공시 0이상 숫자 반환
+				System.out.println(j);
+				if(j > 0) 
 					flag = true;
 				}
-			}
 			
 		} catch (Exception e) {
 		} finally {

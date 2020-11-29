@@ -2,13 +2,13 @@ package poll;
 
 public class ListBean {  
 
-	private int num; 		
-	private String question;
-	private String sdate;	
-	private String edate;	
-	private String wdate;	
-	private int type;		
-	private int active;		
+	private int num; 		//설문번호
+	private String question;//설문내용
+	private String sdate;	//시작날짜
+	private String edate;	//종료날짜
+	private String wdate;	//작성날짜
+	private int type;		//중복투표 허용여부
+	private int active;		//설문 활성화 여부
 	
 	public int getNum() {
 		return num;
